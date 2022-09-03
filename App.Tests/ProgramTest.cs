@@ -31,7 +31,7 @@ public class ProgramTest
     {
         var app = new App.Program();
 
-        Assert.Equal(app.GetResponse(true), "yay");
-        Assert.Equal(app.GetResponse(false), "nay");
+        Assert.Equal("yay", app.GetResponse(true));
+        Assert.Equal("nay", app.GetResponse(false));
     }
 }
