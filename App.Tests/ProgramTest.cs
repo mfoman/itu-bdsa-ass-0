@@ -49,4 +49,36 @@ public class ProgramTest
         msgTrue.Should().Be("yay");
         msgFalse.Should().Be("nay");
     }
+
+    [Fact]
+    public void test_app_with_not_leap_year()
+    {
+        var app = new App.Program();
+
+        var output = new StringWriter();
+        Console.SetOut(output);
+
+        var input = new StringReader("1582");
+        Console.SetIn(input);
+
+        app.Run();
+
+        output.ToString().Should().Contain("nay", "1582 should not be a leap year");
+    }
+
+    [Fact]
+    public void test_app_with_leap_year()
+    {
+        var app = new App.Program();
+
+        var output = new StringWriter();
+        Console.SetOut(output);
+
+        var input = new StringReader("1600");
+        Console.SetIn(input);
+
+        app.Run();
+
+        output.ToString().Should().Contain("yay", "1582 should not be a leap year");
+    }
 }
