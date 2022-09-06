@@ -7,7 +7,7 @@ public class ProgramTest
     {
         var app = new App.Program();
 
-        Assert.True(app.IsLeapYear(4), "Year should be divisible by 4");
+        app.IsLeapYear(4).Should().BeTrue("Year should be divisible by 4");
     }
 
     [Fact]
@@ -15,7 +15,7 @@ public class ProgramTest
     {
         var app = new App.Program();
 
-        Assert.False(app.IsLeapYear(200), "Year should be divisible by 4");
+        app.IsLeapYear(200).Should().BeFalse("Year should be divisible by 4, but not by 100");
     }
 
     [Fact]
@@ -23,7 +23,19 @@ public class ProgramTest
     {
         var app = new App.Program();
 
-        Assert.True(app.IsLeapYear(1600), "Year should be divisible by 4 unless by 100 unless by 400");
+        app.IsLeapYear(1600).Should().BeTrue("Year should be divisible by 4, but not by 100, unless also by 400");
+    }
+
+    [Fact]
+    public void year_is_after_or_on_1582()
+    {
+        var app = new App.Program();
+
+        Action action = () => app.ValidateYear(1582);
+        Action actionTwo = () => app.ValidateYear(1581);
+
+        action.Should().NotThrow<ArgumentException>("Years after and on 1582 should be allowed");
+        actionTwo.Should().Throw<ArgumentException>("Years before 1582 are not allowed");
     }
 
     [Fact]
@@ -31,7 +43,10 @@ public class ProgramTest
     {
         var app = new App.Program();
 
-        Assert.Equal("yay", app.GetResponse(true));
-        Assert.Equal("nay", app.GetResponse(false));
+        var msgTrue = app.GetResponse(true);
+        var msgFalse = app.GetResponse(false);
+
+        msgTrue.Should().Be("yay");
+        msgFalse.Should().Be("nay");
     }
 }

@@ -21,9 +21,24 @@ namespace App
 
             int year = GetInputAsIntOrThrowFormatException();
 
+            ValidateYear(year);
+
             bool isLeapYear = IsLeapYear(year);
 
             return GetResponse(isLeapYear);
+        }
+
+        /// <summary>
+        /// Validates the year
+        /// </summary>
+        /// <param name="year"></param>
+        /// <exception cref="ArgumentException"></exception>
+        public void ValidateYear(int year)
+        {
+            if (year < 1582)
+            {
+                throw new ArgumentException("Only years after or on 1582 can be checked!");
+            }
         }
 
         /// <summary>
